@@ -4,6 +4,6 @@ BadGAI - это нейронная сеть, позволяющая распоз
 
 # Содержание
 1 [Документация](Documents)  
-1.1 [Требования](Documents/Requirements%20Requirements.md)  
+1.1 [Требования](Documents/Requirements/Requirements.md)  
   
 
