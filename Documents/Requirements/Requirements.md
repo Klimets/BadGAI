@@ -38,7 +38,7 @@
 
 ## 2.2 Интерфейс пользователя
 Основное окно приложения.  
-![Основное окно приложения](Documents/Images/MainWindow.PNG) 
+![Основное окно приложения](https://github.com/Klimets/BadGAI/blob/master/Documents/Images/MainWindow.png?raw=true) 
 
 Отдельно рассмотрим данное окно:
 
