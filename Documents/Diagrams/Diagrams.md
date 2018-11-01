@@ -5,4 +5,4 @@
 4. [Диаграмма последовательности](https://github.com/Klimets/BadGAI/blob/master/Documents/Diagrams/Sequence/Sequence.md)
 5. [Диаграмма состояний]()
 6. [Диаграмма развёртывания]()
-7. [Диаграмма компонентов]() 
+
