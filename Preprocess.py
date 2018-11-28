@@ -4,60 +4,62 @@ import cv2
 import numpy as np
 import math
 
+# module level variables
 GAUSSIAN_SMOOTH_FILTER_SIZE = (5, 5)
 ADAPTIVE_THRESH_BLOCK_SIZE = 19
 ADAPTIVE_THRESH_WEIGHT = 9
 
-def preprocess(imgOriginal):
-    imgGrayscale = extractValue(imgOriginal)
 
-    imgMaxContrastGrayscale = maximizeContrast(imgGrayscale)
+def preprocess(img_original):
+    img_grayscale = extract_value(img_original)
 
-    height, width = imgGrayscale.shape
+    img_max_contrast_grayscale = maximize_contrast(img_grayscale)
 
-    imgBlurred = np.zeros((height, width, 1), np.uint8)
+    height, width = img_grayscale.shape
 
-    imgBlurred = cv2.GaussianBlur(imgMaxContrastGrayscale, GAUSSIAN_SMOOTH_FILTER_SIZE, 0)
+    img_blurred = cv2.GaussianBlur(
+        img_max_contrast_grayscale,
+        GAUSSIAN_SMOOTH_FILTER_SIZE,
+        0)
 
-    imgThresh = cv2.adaptiveThreshold(imgBlurred, 255.0, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, ADAPTIVE_THRESH_BLOCK_SIZE, ADAPTIVE_THRESH_WEIGHT)
+    img_thresh = cv2.adaptiveThreshold(
+        img_blurred,
+        255.0,
+        cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+        cv2.THRESH_BINARY_INV,
+        ADAPTIVE_THRESH_BLOCK_SIZE,
+        ADAPTIVE_THRESH_WEIGHT)
 
-    return imgGrayscale, imgThresh
-
-def extractValue(imgOriginal):
-    height, width, numChannels = imgOriginal.shape
-
-    imgHSV = np.zeros((height, width, 3), np.uint8)
-
-    imgHSV = cv2.cvtColor(imgOriginal, cv2.COLOR_BGR2HSV)
-
-    imgHue, imgSaturation, imgValue = cv2.split(imgHSV)
-
-    return imgValue
-
-def maximizeContrast(imgGrayscale):
-
-    height, width = imgGrayscale.shape
-
-    imgTopHat = np.zeros((height, width, 1), np.uint8)
-    imgBlackHat = np.zeros((height, width, 1), np.uint8)
-
-    structuringElement = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
-
-    imgTopHat = cv2.morphologyEx(imgGrayscale, cv2.MORPH_TOPHAT, structuringElement)
-    imgBlackHat = cv2.morphologyEx(imgGrayscale, cv2.MORPH_BLACKHAT, structuringElement)
-
-    imgGrayscalePlusTopHat = cv2.add(imgGrayscale, imgTopHat)
-    imgGrayscalePlusTopHatMinusBlackHat = cv2.subtract(imgGrayscalePlusTopHat, imgBlackHat)
-
-    return imgGrayscalePlusTopHatMinusBlackHat
+    return img_grayscale, img_thresh
+# end function
 
 
+def extract_value(img_original):
+
+    img_hsv = cv2.cvtColor(img_original, cv2.COLOR_BGR2HSV)
+
+    img_hue, img_saturation, img_value = cv2.split(img_hsv)
+
+    return img_value
+# end function
 
 
+def maximize_contrast(img_grayscale):
 
+    structuring_element = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
 
+    img_top_hat = cv2.morphologyEx(
+        img_grayscale,
+        cv2.MORPH_TOPHAT,
+        structuring_element)
+    img_black_hat = cv2.morphologyEx(
+        img_grayscale,
+        cv2.MORPH_BLACKHAT,
+        structuring_element)
 
+    img_grayscale_plus_top_hat = cv2.add(img_grayscale, img_top_hat)
+    img_grayscale_plus_top_hat_minus_black_hat = cv2.subtract(
+        img_grayscale_plus_top_hat, img_black_hat)
 
-
-
-
+    return img_grayscale_plus_top_hat_minus_black_hat
+# end function

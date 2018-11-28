@@ -3,18 +3,15 @@
 import cv2
 import numpy as np
 
+
 class PossiblePlate:
 
+    # constructor
     def __init__(self):
-        self.imgPlate = None
-        self.imgGrayscale = None
-        self.imgThresh = None
+        self.img_plate = None
+        self.img_grayscale = None
+        self.img_thresh = None
 
         self.rrLocationOfPlateInScene = None
 
-        self.strChars = ""
-
-
-
-
-
+        self.str_chars = ""  # end constructor
