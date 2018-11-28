@@ -108,6 +108,7 @@ def detect_plates_in_scene(img_original_scene):
     return list_of_possible_plates
 # end function
 
+
 def find_possible_chars_in_scene(img_thresh):
     list_of_possible_chars = []
 
@@ -137,6 +138,7 @@ def find_possible_chars_in_scene(img_thresh):
 
     return list_of_possible_chars
 # end function
+
 
 def extract_plate(img_original, list_of_matching_chars):
     possible_plate = PossiblePlate.PossiblePlate()

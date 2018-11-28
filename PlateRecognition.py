@@ -35,7 +35,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setup_ui(self)
         self.Choose.clicked.connect(self.show_dialog)
         self.Recognition.clicked.connect(self.license_plate_recognition)
-    # end function	
+    # end function
+	
 
     def setup_ui(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -75,11 +76,13 @@ class MainWindow(QtWidgets.QMainWindow):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
     # end function
 
+
     def retranslate_ui(self, main_window):
         main_window.setWindowTitle(QtCore.QCoreApplication.translate("BadGAI", "BadGAI"))
         self.Choose.setText(QtCore.QCoreApplication.translate("MainWindow", "Выбрать фото"))
         self.Recognition.setText(QtCore.QCoreApplication.translate("MainWindow", "Распознать"))
     # end function
+
 
     def show_dialog(self):
         self.plate_image_file = QtWidgets.QFileDialog.getOpenFileName(self, str("Open Image"), "/home",
@@ -90,6 +93,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label.resize(pixmap.width(), pixmap.height())
         self.resize(pixmap.width(), pixmap.height())
     # end function
+
 
     def license_plate_recognition(self):
 
@@ -142,6 +146,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label.setPixmap(pixmap)
      # end function
 
+
 def draw_rectangle_around_plate(img_original_scene, lic_plate):
     rect_points = cv2.boxPoints(lic_plate.rrLocationOfPlateInScene)
 
@@ -161,6 +166,7 @@ def draw_rectangle_around_plate(img_original_scene, lic_plate):
         img_original_scene, tuple(
             rect_points[3]), tuple(rect_points[0]), SCALAR_RED, 2)
 # end function
+
 
 def write_license_plate_chars_on_image(img_original_scene, lic_plate):
 
@@ -197,12 +203,14 @@ def write_license_plate_chars_on_image(img_original_scene, lic_plate):
                 font_scale, SCALAR_YELLOW, font_thickness)
 # end function
 
+
 def main():
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()
     window.show()
     sys.exit(app.exec_())
 # end function
+
 
 if __name__ == "__main__":
     main()

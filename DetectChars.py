@@ -60,6 +60,7 @@ def load_and_train():
     return True
 # end function
 
+
 def detect_chars_in_plates(list_of_possible_plates):
 
     if len(list_of_possible_plates) == 0:
@@ -166,6 +167,7 @@ def detect_chars_in_plates(list_of_possible_plates):
     return list_of_possible_plates
 # end function
 
+
 def find_possible_chars_in_plate(img_grayscale, img_thresh):
     list_of_possible_chars = []
     img_thresh_copy = img_thresh.copy()
@@ -190,6 +192,7 @@ def check_if_possible_char(possible_char):
         return True
     else:
         return False
+# end function
 
 
 def find_list_of_lists_of_matching_chars(list_of_possible_chars):
@@ -234,15 +237,16 @@ def find_list_of_matching_chars(possible_char, list_of_chars):
             possible_char, possiblematching_char)
 
         change_in_area = float(
-            abs(possiblematching_char.intBoundingRectArea - possible_char.intBoundingRectArea)) / float(
-            possible_char.intBoundingRectArea)
+            abs(possiblematching_char.intBoundingRectArea - possible_char.intBoundingRectArea))/
+		float(possible_char.intBoundingRectArea)
 
         change_in_width = float(
-            abs(possiblematching_char.intBoundingRectWidth - possible_char.intBoundingRectWidth)) / float(
-            possible_char.intBoundingRectWidth)
+            abs(possiblematching_char.intBoundingRectWidth - possible_char.intBoundingRectWidth))/
+		float(possible_char.intBoundingRectWidth)
+
         change_in_height = float(
-            abs(possiblematching_char.intBoundingRectHeight - possible_char.intBoundingRectHeight)) / float(
-            possible_char.intBoundingRectHeight)
+            abs(possiblematching_char.intBoundingRectHeight - possible_char.intBoundingRectHeight))/
+		float(possible_char.intBoundingRectHeight)
 
         if (int_distance_between_chars < (possible_char.fltDiagonalSize * MAX_DIAG_SIZE_MULTIPLE_AWAY) and
                 int_angle_between_chars < MAX_ANGLE_BETWEEN_CHARS and
@@ -254,12 +258,14 @@ def find_list_of_matching_chars(possible_char, list_of_chars):
     return list_of_matching_chars
 # end function
 
+
 def distance_between_chars(first_char, second_char):
     int_x = abs(first_char.intCenterX - second_char.intCenterX)
     int_y = abs(first_char.intCenterY - second_char.intCenterY)
 
     return math.sqrt((int_x ** 2) + (int_y ** 2))
 # end function
+
 
 def angle_between_chars(first_char, second_char):
     adj = float(abs(first_char.intCenterX - second_char.intCenterX))
@@ -273,6 +279,7 @@ def angle_between_chars(first_char, second_char):
     angle_in_deg = angle_in_rad * (180.0 / math.pi)
     return angle_in_deg
 # end function
+
 
 def remove_inner_overlapping_chars(list_of_matching_chars):
     list_of_chars_with_inner_char_removed = list(list_of_matching_chars)
@@ -293,6 +300,7 @@ def remove_inner_overlapping_chars(list_of_matching_chars):
 
     return list_of_chars_with_inner_char_removed
 # end function
+
 
 def recognize_chars_in_plate(img_thresh, list_of_matching_chars):
     str_chars = ""
