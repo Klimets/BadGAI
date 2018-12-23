@@ -80,36 +80,8 @@ def detect_chars_in_plates(list_of_possible_plates):
         list_of_possible_chars_in_plate = find_possible_chars_in_plate(
             possiblePlate.img_grayscale, possiblePlate.img_thresh)
 
-        if PlateRecognition.showSteps:
-            height, width, num_channels = possiblePlate.imgPlate.shape
-            contours = np.zeros((height, width, 3), np.uint8)
-            del contours[:]
-
-            for possible_char in list_of_possible_chars_in_plate:
-                contours.append(possible_char.contour)
-
-            cv2.drawContours(contours, contours, -1,
-                             PlateRecognition.SCALAR_WHITE)
-
-            cv2.imshow("6", contours)
-
         list_of_lists_of_matching_chars = find_list_of_lists_of_matching_chars(
             list_of_possible_chars_in_plate)
-
-        if PlateRecognition.showSteps:
-            contours = np.zeros((height, width, 3), np.uint8)
-            del contours[:]
-
-            for list_of_matching_chars in list_of_lists_of_matching_chars:
-                random_blue = random.randint(0, 255)
-                random_green = random.randint(0, 255)
-                random_red = random.randint(0, 255)
-
-                for matching_char in list_of_matching_chars:
-                    contours.append(matching_char.contour)
-                cv2.drawContours(contours, contours, -
-                                 1, (random_blue, random_green, random_red))
-            cv2.imshow("7", contours)
 
         if len(list_of_lists_of_matching_chars) == 0:
             possiblePlate.strChars = ""
