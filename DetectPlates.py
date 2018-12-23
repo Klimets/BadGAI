@@ -25,28 +25,9 @@ def detect_plates_in_scene(img_original_scene):
 
     cv2.destroyAllWindows()
 
-    if PlateRecognition.showSteps:
-        cv2.imshow("0", img_original_scene)
-
     img_grayscale_scene, img_thresh_scene = Preprocess.preprocess(img_original_scene)
 
     list_of_possible_chars_in_scene = find_possible_chars_in_scene(img_thresh_scene)
-
-    # show steps
-    if PlateRecognition.showSteps:
-        print("step 2 - len(list_of_possible_chars_in_scene) = " + str(
-            len(list_of_possible_chars_in_scene)))
-
-        img_contours = np.zeros((height, width, 3), np.uint8)
-
-        contours = []
-
-        for possibleChar in list_of_possible_chars_in_scene:
-            contours.append(possibleChar.contour)
-
-        cv2.drawContours(img_contours, contours, -1,
-                         PlateRecognition.SCALAR_WHITE)
-    # end if # show steps
 
     list_of_lists_of_matching_chars = DetectChars.find_list_of_lists_of_matching_chars(
         list_of_possible_chars_in_scene)
@@ -74,11 +55,7 @@ def detect_plates_in_scene(img_original_scene):
 
     print("\n" + str(len(list_of_possible_plates)) + " possible plates found")
 
-    if PlateRecognition.showSteps:
-        print("\n")
-        cv2.imshow("4a", img_contours)
-
-        for i in range(0, len(list_of_possible_plates)):
+    for i in range(0, len(list_of_possible_plates)):
             rect_points = cv2.boxPoints(
                 list_of_possible_plates[i].rrLocationOfPlateInScene)
 
@@ -102,8 +79,6 @@ def detect_plates_in_scene(img_original_scene):
             cv2.imshow("4b", list_of_possible_plates[i].imgPlate)
             cv2.waitKey(0)
 
-        print("\nplate detection complete, click on any image and press a key to begin char recognition . . .\n")
-        cv2.waitKey(0)
 
     return list_of_possible_plates
 # end function
